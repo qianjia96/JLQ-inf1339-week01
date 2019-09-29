@@ -15,6 +15,9 @@
                 border:solid;
                 border-collapse:collapse;}
             .notsevenSegmentTable{border: none;}
+            .horizontal {width: 40px; height: 10px;}
+            .vertical {width: 10px; height: 40px;}
+            .red {background-color: red;}
         </style>
         <script>
             function display(number){
@@ -71,26 +74,49 @@
             function illuminate(signals){
                 document.getElementById("illuminate_output").innerHTML = signals
                 if(signals[0] == '1'){
-                    document.getElementById("segmentA").innerHTML = 'ON'}
-                else {document.getElementById("segmentA").innerHTML = ''}
+                    document.getElementById("segmentA").innerHTML = 'ON'
+                    document.getElementById("segmentA").setAttribute("class","red")
+                }
+                else {document.getElementById("segmentA").innerHTML = ''
+                     document.getElementById("segmentA").setAttribute("class","black")
+                     }
                 if(signals[1] == '1'){
-                    document.getElementById("segmentB").innerHTML = 'ON'}
-                else {document.getElementById("segmentB").innerHTML = ''}
+                    document.getElementById("segmentB").innerHTML = 'ON'
+                    document.getElementById("segmentB").setAttribute("class","red")
+                }
+                else {document.getElementById("segmentB").innerHTML = ''
+                     document.getElementById("segmentB").setAttribute("class","black")}
                 if(signals[2] == '1'){
-                    document.getElementById("segmentC").innerHTML = 'ON'}
-                else {document.getElementById("segmentC").innerHTML = ''}
+                    document.getElementById("segmentC").innerHTML = 'ON'
+                    document.getElementById("segmentC").setAttribute("class","red")
+                }
+                else {document.getElementById("segmentC").innerHTML = ''
+                     document.getElementById("segmentC").setAttribute("class","black")
+                     }
                 if(signals[3] == '1'){
-                    document.getElementById("segmentD").innerHTML = 'ON'}
-                else {document.getElementById("segmentD").innerHTML = ''}
+                    document.getElementById("segmentD").innerHTML = 'ON'
+                    document.getElementById("segmentD").setAttribute("class","red")}
+                else {document.getElementById("segmentD").innerHTML = ''
+                     document.getElementById("segmentD").setAttribute("class","black")
+                     }
                 if(signals[4] == '1'){
-                    document.getElementById("segmentE").innerHTML = 'ON'}
-                else {document.getElementById("segmentE").innerHTML = ''}
+                    document.getElementById("segmentE").innerHTML = 'ON'
+                    document.getElementById("segmentE").setAttribute("class","red")}
+                else {document.getElementById("segmentE").innerHTML = ''
+                     document.getElementById("segmentE").setAttribute("class","black")
+                     }
                 if(signals[5] == '1'){
-                    document.getElementById("segmentF").innerHTML = 'ON'}
-                else {document.getElementById("segmentF").innerHTML = ''}
+                    document.getElementById("segmentF").innerHTML = 'ON'
+                    document.getElementById("segmentF").setAttribute("class","red")}
+                else {document.getElementById("segmentF").innerHTML = ''
+                     document.getElementById("segmentF").setAttribute("class","black")
+                     }
                 if(signals[6] == '1'){
-                    document.getElementById("segmentG").innerHTML = 'ON'}
-                else {document.getElementById("segmentG").innerHTML = ''}       
+                    document.getElementById("segmentG").innerHTML = 'ON'
+                    document.getElementById("segmentG").setAttribute("class","red")}
+                else {document.getElementById("segmentG").innerHTML = ''
+                     document.getElementById("segmentG").setAttribute("class","black")
+                     }       
             }
             
             
@@ -158,29 +184,29 @@
                     <table>
                     <tr><td class="notsevenSegmentTable">1</td>
                         <td id="segmentA"
-                            class="sevenSegmentTable">A</td>
+                            class="sevenSegmentTable horizontal">A</td>
                         <td class="notsevenSegmentTable">3</td>
                     </tr>
                     <tr><td id="segmentF"
-                            class="sevenSegmentTable">F</td>
+                            class="sevenSegmentTable vertical">F</td>
                         <td class="notsevenSegmentTable">2</td>
                         <td id="segmentB"
-                            class="sevenSegmentTable">B</td>
+                            class="sevenSegmentTable vertical">B</td>
                     </tr>
                     <tr><td class="notsevenSegmentTable">1</td>
                         <td id="segmentG"
-                            class="sevenSegmentTable">G</td>
+                            class="sevenSegmentTable horizontal">G</td>
                         <td class="notsevenSegmentTable">3</td>
                     </tr>
                     <tr><td id="segmentE"
-                            class="sevenSegmentTable">E</td>
+                            class="sevenSegmentTable vertical">E</td>
                         <td class="notsevenSegmentTable">2</td>
                         <td id="segmentC"
-                            class="sevenSegmentTable">C</td>
+                            class="sevenSegmentTable vertical">C</td>
                     </tr>
                     <tr><td class="notsevenSegmentTable">1</td>
                         <td id="segmentD"
-                            class="sevenSegmentTable">D</td>
+                            class="sevenSegmentTable horizontal">D</td>
                         <td class="notsevenSegmentTable">3</td>
                     </tr>
                     </table>
