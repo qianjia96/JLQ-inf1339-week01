@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <style>
+        .standardTable{border: soild;
+                       border-collapse:collapse;}
+        .blackbox{border: solid;
+                  height: 100px;
+                  width: 100px;
+                  text-align: center;
+                  background-color:black;
+                  border-color: white;
+                  color:yellow;}
+            .sevenSegmentTable{color:white;
+                border-color:white;
+                border:solid;
+                border-collapse:collapse;}
+            .notsevenSegmentTable{border: none;}
+        </style>
+        <script>
+            function display(number){
+                //this will show both decimal number we input and binary number we hope output
+                document.getElementById("decimal_input").innerHTML=number
+                var bin = dec2bin(number)
+                document.getElementById("binary_output").innerHTML=bin
+                
+                //send binary number to function bin2ssd()
+                document.getElementById("binary2ssd_input").innerHTML=bin
+                var ssd = bin2ssd(bin)
+                document.getElementById("binary2ssd_output").innerHTML=ssd
+                
+                //send ssd signals to function illuminate_segments()
+                document.getElementById("illuminate_input").innerHTML=ssd
+                var bcd = illuminate(ssd)
+                document.getElementById("illuminate_output").innerHTML='done'
+            }
+            
+            function bin2ssd(binary){
+                // convert the four bit input string into w,x,y,z variables
+                var w = false // set them to false at first then change if input '1'
+                var x = false
+                var y = false
+                var z = false
+                if (binary[0] == '1') {w = true}
+                if (binary[1] == '1') {x = true}
+                if (binary[2] == '1') {y = true}
+                if (binary[3] == '1') {z = true}
+                
+                // "compute" the value of logical experssion for each segment
+                var a = !w&x&z || w&!x&!y || !x&!y&!z || !w&y // A was ~wxz + w~x~y + ~x~y~z + ~wy
+                var b = !w&y&z || !w&!y&!z || !x&!y || !w&!x // B was ~wyz + ~w~y~z + ~x~y + ~w~x
+                var c = !w&!y || !w&z || !w&x&y || !x&!y // C was ~w~y + ~wz + ~wxy + ~x~y
+                var d = !x&!y&!z || !w&!x&y || !w&y&!z || w&!x&!y || !w&x&!y&z // D was ~x~y~z + ~w~xy + ~wy~z + w~x~y + ~wx~yz
+                var e = !w&y&!z || !w&!x&!z || !x&!y&!z // E was ~wy~z + ~w~x~z + ~x~y~z
+                var f = w&!x&!y || !w&x&!y || !w&!y&!z || !w&x&!z // F was w~x~y + ~wx~y + ~w~y~z + ~wx~z
+                var g = !w&!x&y || !w&x&!y || !w&x&!z || w&~x&~y // G was ~w~xy + ~wx~y + ~wx~z + w~x~y
+                
+                // assemble and return the output
+                // we will build up the output string element by element
+                var output = ''
+                if (a) {output = output + '1'} else {output = output + '0'}
+                if (b) {output = output + '1'} else {output = output + '0'}
+                if (c) {output = output + '1'} else {output = output + '0'}
+                if (d) {output = output + '1'} else {output = output + '0'}
+                if (e) {output = output + '1'} else {output = output + '0'}
+                if (f) {output = output + '1'} else {output = output + '0'}
+                if (g) {output = output + '1'} else {output = output + '0'}
+                return(output) 
+                
+            }
+            
+            function illuminate(signals){
+                document.getElementById("illuminate_output").innerHTML = signals
+                if(signals[0] == '1'){
+                    document.getElementById("segmentA").innerHTML = 'ON'}
+                else {document.getElementById("segmentA").innerHTML = ''}
+                if(signals[1] == '1'){
+                    document.getElementById("segmentB").innerHTML = 'ON'}
+                else {document.getElementById("segmentB").innerHTML = ''}
+                if(signals[2] == '1'){
+                    document.getElementById("segmentC").innerHTML = 'ON'}
+                else {document.getElementById("segmentC").innerHTML = ''}
+                if(signals[3] == '1'){
+                    document.getElementById("segmentD").innerHTML = 'ON'}
+                else {document.getElementById("segmentD").innerHTML = ''}
+                if(signals[4] == '1'){
+                    document.getElementById("segmentE").innerHTML = 'ON'}
+                else {document.getElementById("segmentE").innerHTML = ''}
+                if(signals[5] == '1'){
+                    document.getElementById("segmentF").innerHTML = 'ON'}
+                else {document.getElementById("segmentF").innerHTML = ''}
+                if(signals[6] == '1'){
+                    document.getElementById("segmentG").innerHTML = 'ON'}
+                else {document.getElementById("segmentG").innerHTML = ''}       
+            }
+            
+            
+            // first method
+            function dec2bin_1(decimal){
+                var binary_numbers = [
+                    "0000","0001","0010","0011","0100","0101","0110","0111","1000","1001"
+                ]
+                return (binary_numbers[decimal])
+            }
+            
+            // second method
+            function dec2bin(decimal){
+               var quotient = decimal
+               var output =''
+               while (quotient > 0){
+                   remainder = quotient % 2
+                   if (remainder == 1)
+                       {output = '1' + output}
+                   else
+                       {output = '0' + output}
+                   quotient = Math.floor(quotient/2)
+               }
+                // this while loop is used to add 0 to the output to make sure it ouput 4-digit
+                while(output.length <4){
+                    output = '0'+ output
+                }
+            return (output)
+            }
+        </script>
+    </head>
+    <body>
+        <h2>version 9a table grid for display segments</h2>
+        <table class="standardTable">
+            <tr>
+                <td class="blackbox"><h3>Keypad</h3>
+                    <button type="button" onclick="display(1)">1</button>
+                    <button type="button" onclick="display(2)">2</button>
+                    <button type="button" onclick="display(3)">3</button>
+                    <button type="button" onclick="display(4)">4</button>
+                    <button type="button" onclick="display(5)">5</button>
+                    <button type="button" onclick="display(6)">6</button>
+                    <button type="button" onclick="display(7)">7</button>
+                    <button type="button" onclick="display(8)">8</button>
+                    <button type="button" onclick="display(9)">9</button>
+                    <button type="button" onclick="display(0)">0</button>
+                </td>
+                
+                <td class="blackbox">
+                    <h3>Decimal to Binary</h3>
+                    <p id="decimal_input">???</p>
+                    <p id="binary_output">???</p>
+                </td>
+                
+                <td class="blackbox">
+                    <h3>Binary to SSD Signals</h3>
+                    <p id = "binary2ssd_input">???</p>
+                    <p id = "binary2ssd_output">???</p>
+                </td>
+                
+                <td class="blackbox">
+                    <h3>Illuminate Segments</h3>
+                    <p id = "illuminate_input"></p>
+                    <p id="illuminate_output"></p>
+                    <table>
+                    <tr><td class="notsevenSegmentTable">1</td>
+                        <td id="segmentA"
+                            class="sevenSegmentTable">A</td>
+                        <td class="notsevenSegmentTable">3</td>
+                    </tr>
+                    <tr><td id="segmentF"
+                            class="sevenSegmentTable">F</td>
+                        <td class="notsevenSegmentTable">2</td>
+                        <td id="segmentB"
+                            class="sevenSegmentTable">B</td>
+                    </tr>
+                    <tr><td class="notsevenSegmentTable">1</td>
+                        <td id="segmentG"
+                            class="sevenSegmentTable">G</td>
+                        <td class="notsevenSegmentTable">3</td>
+                    </tr>
+                    <tr><td id="segmentE"
+                            class="sevenSegmentTable">E</td>
+                        <td class="notsevenSegmentTable">2</td>
+                        <td id="segmentC"
+                            class="sevenSegmentTable">C</td>
+                    </tr>
+                    <tr><td class="notsevenSegmentTable">1</td>
+                        <td id="segmentD"
+                            class="sevenSegmentTable">D</td>
+                        <td class="notsevenSegmentTable">3</td>
+                    </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
